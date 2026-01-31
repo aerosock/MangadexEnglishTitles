@@ -1,0 +1,166 @@
+{
+  "result": "ok",
+  "response": "collection",
+  "data": [
+    {
+      "id": "bc70eee3-5668-4a89-bc57-4ec3af33e8ed",
+      "type": "manga",
+      "attributes": {
+        "title": {
+          "ja-ro": "Kyou Kara Onushi wa Warawa no Musuko"
+        },
+        "altTitles": [
+          {
+            "en": "Starting Today, You Are the Snake Goddess' Son"
+          },
+          {
+            "en": "From Today, You Are the Snake Goddess' Son"
+          },
+          {
+            "ja": "今日からお主は蛇神〈わらわ〉の息子"
+          },
+          {
+            "ja": "今日からお主は蛇神の息子"
+          },
+          {
+            "ja-ro": "Kyou Kara Onushi wa Hebigami no Musuko"
+          },
+          {
+            "vi": "Từ giờ làm con của Thần Rắn nhé"
+          }
+        ],
+        "description": {
+          "en": "It’s the present day.\nA small boy, abandoned at a shrine by his mother, is taken in and lovingly raised by a serpent god who has adored raising children since ancient times.\nHowever, being a non-human deity, the serpent god’s affection seems to be just a little… off the mark?",
+          "ja": "時は現代。お母さんに神社に置き去りにされてしまった幼い男の子は、遠い昔から子育てが大好きな蛇神さまに拾われ大切に育てられることに。でも、蛇神さまの愛情は人外の神ゆえにちょっぴり的外れなようで…?"
+        },
+        "isLocked": false,
+        "links": {
+          "al": "206813",
+          "mu": "raytv73",
+          "mal": "190682",
+          "raw": "https://magcomi.com/episode/2551460909653609843"
+        },
+        "officialLinks": null,
+        "originalLanguage": "ja",
+        "lastVolume": "",
+        "lastChapter": "",
+        "publicationDemographic": null,
+        "status": "ongoing",
+        "year": 2025,
+        "contentRating": "suggestive",
+        "tags": [
+          {
+            "id": "4d32cc48-9f00-4cca-9b5a-a839f0764984",
+            "type": "tag",
+            "attributes": {
+              "name": {
+                "en": "Comedy"
+              },
+              "description": {},
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "b11fda93-8f1d-4bef-b2ed-8803d3733170",
+            "type": "tag",
+            "attributes": {
+              "name": {
+                "en": "4-Koma"
+              },
+              "description": {},
+              "group": "format",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "cdc58593-87dd-415e-bbc0-2ec27bf404cc",
+            "type": "tag",
+            "attributes": {
+              "name": {
+                "en": "Fantasy"
+              },
+              "description": {},
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "dd1f77c5-dea9-4e2b-97ae-224af09caf99",
+            "type": "tag",
+            "attributes": {
+              "name": {
+                "en": "Monster Girls"
+              },
+              "description": {},
+              "group": "theme",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "e5301a23-ebd9-49dd-a0cb-2add944c7fe9",
+            "type": "tag",
+            "attributes": {
+              "name": {
+                "en": "Slice of Life"
+              },
+              "description": {},
+              "group": "genre",
+              "version": 1
+            },
+            "relationships": []
+          },
+          {
+            "id": "eabc5b4c-6aff-42f3-b657-3e90cbd00b75",
+            "type": "tag",
+            "attributes": {
+              "name": {
+                "en": "Supernatural"
+              },
+              "description": {},
+              "group": "theme",
+              "version": 1
+            },
+            "relationships": []
+          }
+        ],
+        "state": "published",
+        "chapterNumbersResetOnNewVolume": false,
+        "createdAt": "2026-01-23T20:42:09+00:00",
+        "updatedAt": "2026-01-29T20:44:39+00:00",
+        "version": 11,
+        "availableTranslatedLanguages": [
+          "es-la",
+          "vi",
+          "en"
+        ],
+        "latestUploadedChapter": "0b48d688-2bde-42a4-8929-1070b36a5f08"
+      },
+      "relationships": [
+        {
+          "id": "d59b0e8a-176a-4b33-ad28-7151af99c505",
+          "type": "author"
+        },
+        {
+          "id": "d59b0e8a-176a-4b33-ad28-7151af99c505",
+          "type": "artist"
+        },
+        {
+          "id": "99797592-02fb-45b6-83bc-941af50bd6ed",
+          "type": "cover_art"
+        },
+        {
+          "id": "4b4f7fc5-b3ae-4685-8e2b-d121166985de",
+          "type": "creator"
+        }
+      ]
+    }
+  ],
+  "limit": 10,
+  "offset": 0,
+  "total": 1
+}

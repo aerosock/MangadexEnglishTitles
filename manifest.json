@@ -1,0 +1,15 @@
+{
+  "manifest_version": 2,
+  "name": "MangadexTitleTL",
+  "version": "1.0",
+  "description": "Displays titles on Mangadex in the user's preferred language.",
+  "icons": { "48": "border-48.png" },
+  "permissions": ["https://api.mangadex.org/*"],
+  "background": { "scripts": ["bgscript.js"] },
+  "content_scripts": [
+    {
+      "matches": ["*://mangadex.org/titles*"],
+      "js": ["MangadexEnglishTitle.js"]
+    }
+  ]
+}
