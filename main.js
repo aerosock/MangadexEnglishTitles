@@ -21,8 +21,8 @@ async function main(){
       //the main title is actually jp-ro despite being marked as en which confuses the code 
       if (enname && enname !== title.textContent) {
         console.log("Found English title: " + enname);
-        title.textContent = enname;
-        title.style.color = "red";
+        title.textContent = enname; //the renaming
+        title.style.color = "red"; // marking the changed titles 
       }
     }  
   }
@@ -31,7 +31,7 @@ async function main(){
   }
 }
 let debounceTimer;
-const observer = new MutationObserver(() => {
+const observer = new MutationObserver(() => { // this thing wont allow the main to be refreshed as long as changes are happening in a 300ms window
   clearTimeout(debounceTimer);
   debounceTimer = setTimeout(main, 300);
 });
