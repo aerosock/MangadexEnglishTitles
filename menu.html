@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MangaDex Utils Settings</title>
+    <script src="https://cdn.tailwindcss.com"></script>    
+    <style>
+        body{
+            width:320px;
+            overflow-x:hidden;
+        }
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #29c14f; 
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #29c14f; 
+        }
+        
+    </style>
+<body class="bg-gray-900 text-gray-100 p-4">
+  
+<h3 class="text-lg font-bold text-white text-center">mangadex utils settings</h3>
+
+<div class="flex items-center justify-around mb-5 mt-4">
+    <span class="text-sm font-medium text-gray-300">on/off</span>
+    
+    <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+        <input type="checkbox" name="toggle" id="enableSwitch" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer border-gray-300 checked:right-0 transition-all duration-300"/>
+        <label for="enableSwitch" class="toggle-label block overflow-hidden h-5 rounded-full bg-gray-600 cursor-pointer"></label>
+    </div>
+</div>
+
+<div class="mb-4">
+        <label for="langInput" class="block text-xs font-medium text-gray-400 mb-1">custom language code</label>
+        <input type="text" id="langInput" 
+            class="w-full bg-gray-800 border border-gray-700 text-white text-sm rounded focus:ring-1 focus:ring-orange-500 focus:border-orange-500 block p-2 outline-none transition-colors" 
+            placeholder="en, es, fr, ru" 
+            value="en">
+        <li class="mt-1 text-xs text-gray-500">
+            use ISO codes (e.g., 'en', 'es-la').
+        </li>
+        <li class="mt-1 text-xs text-gray-500">
+            if such title is not found, english will be used instead.
+        </li>
+</div>
+
+<h5 class="mt-4 text-sm text-center text-gray-400">to be continued...</h5>
+<script src="popup.js"></script>
+</body>
+</html>

@@ -1,12 +1,26 @@
 let decoder = new TextDecoder("utf-8");
 let encoder = new TextEncoder();
 
+let settings = {enabled: true, targetLang: "en"};
+
+
+
+browser.storage.local.get(["enabled", "targetLang"]).then((res) => {
+    if (res.enabled !== undefined) settings.enabled = res.enabled;
+    if (res.targetLang) settings.targetLang = res.targetLang;
+});
+
+browser.runtime.onMessage.addListener((message) => {
+    if (message.type === "SETTINGS_UPDATED") {
+        settings = message.settings;
+    }
+});
+
 browser.webRequest.onBeforeRequest.addListener(
   listening,
   { urls: ["https://api.mangadex.org/manga*"] },
   ["blocking"]
 );
-
 
 function listening(details) {
   const filter = browser.webRequest.filterResponseData(details.requestId);
@@ -35,6 +49,11 @@ function listening(details) {
             }
           }
         }
+        if (!settings.enabled) {
+                filter.write(encoder.encode(string));
+                filter.close();
+                return;
+            }
         let json = JSON.parse(string); //jsoning it so we can manipulate the values
         for(let i=0; i < (json.data).length;i++){
           const enalttitle = (json.data[i].attributes.altTitles).find((title) => title.en)

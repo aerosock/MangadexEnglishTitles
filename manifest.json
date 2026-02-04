@@ -18,8 +18,7 @@
   "background": { "scripts": ["bgscript.js"] },
   "content_scripts": [
     {
-      "matches": ["*://mangadex.org/titles*"],
-      "js": ["main.js"]
+      "matches": ["*://mangadex.org/titles*"]
     }
   ]
 }
