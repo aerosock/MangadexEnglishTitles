@@ -49,16 +49,27 @@ function listening(details) {
             }
           }
         }
+        console.log("before sets");
         if (!settings.enabled) {
                 filter.write(encoder.encode(string));
                 filter.close();
                 return;
             }
+        console.log("after sets");
         let json = JSON.parse(string); //jsoning it so we can manipulate the values
+        const targetLang = settings.targetLang || "en";
+
         for(let i=0; i < (json.data).length;i++){
-          const enalttitle = (json.data[i].attributes.altTitles).find((title) => title.en)
+          const enalttitle = (json.data[i].attributes.altTitles).find((title) => title[targetLang])
+          const realentitle = (json.data[i].attributes.altTitles).find((title) => title.en)
           if (enalttitle){
-            json.data[i].attributes.title = { "en": enalttitle.en };
+            json.data[i].attributes.title = { "en": enalttitle[targetLang] };
+          }
+          else if (realentitle){
+            json.data[i].attributes.title = { "en": realentitle.en };
+          }
+          else{
+            continue;
           }
         }
       const output = JSON.stringify(json) // grinding back into a string to send back

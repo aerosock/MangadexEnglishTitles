@@ -15,10 +15,5 @@
     "default_popup": "menu.html",
     "default_title": "Mangadex Settings"
   },
-  "background": { "scripts": ["bgscript.js"] },
-  "content_scripts": [
-    {
-      "matches": ["*://mangadex.org/titles*"]
-    }
-  ]
+  "background": { "scripts": ["bgscript.js"] }
 }
