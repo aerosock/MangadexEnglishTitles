@@ -16,6 +16,13 @@ browser.runtime.onMessage.addListener((message) => {
     }
 });
 
+// Block service worker
+browser.webRequest.onBeforeRequest.addListener(
+    () => { return { cancel: true }; },
+    { urls: ["https://mangadex.org/sw.js", "*://mangadex.org/*workbox*"] },
+    ["blocking"]
+);
+
 browser.webRequest.onBeforeRequest.addListener(
   listening,
   { urls: ["https://api.mangadex.org/manga*"] },
@@ -36,6 +43,11 @@ function listening(details) {
   filter.onstop = () => {
     let string = "";
     try{
+        // If no data received, just close the filter
+        if (data.length == 0){
+          filter.close();
+          return;
+        }
         if (data.length == 1){
           string = decoder.decode(data[0])
         }
@@ -49,6 +61,11 @@ function listening(details) {
             }
           }
         }
+        // If string is empty, just close
+        if (!string || string.length == 0){
+          filter.close();
+          return;
+        }
         console.log("before sets");
         if (!settings.enabled) {
                 filter.write(encoder.encode(string));
@@ -59,7 +76,14 @@ function listening(details) {
         let json = JSON.parse(string); //jsoning it so we can manipulate the values
         const targetLang = settings.targetLang || "en";
 
+        if (!Array.isArray(json.data)) {
+            filter.write(encoder.encode(string));
+            filter.close();
+            return;
+        }
+
         for(let i=0; i < (json.data).length;i++){
+          if (!json.data[i].attributes?.altTitles) continue;
           const enalttitle = (json.data[i].attributes.altTitles).find((title) => title[targetLang])
           const realentitle = (json.data[i].attributes.altTitles).find((title) => title.en)
           if (enalttitle){
@@ -72,7 +96,8 @@ function listening(details) {
             continue;
           }
         }
-      const output = JSON.stringify(json) // grinding back into a string to send back
+      const output = JSON.stringify(json)
+      console.log("✅ Writing modified response, first title:", json.data[0]?.attributes?.title);
       filter.write(encoder.encode(output));
     
     }
@@ -83,74 +108,3 @@ function listening(details) {
     filter.close();
     };
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// browser.webRequest.onBeforeRequest.addListener(
-//   (details) => {
-//     const filter = browser.webRequest.filterResponseData(details.requestId);
-//     const chunks = [];
-
-//     filter.ondata = (event) => {
-//       chunks.push(event.data);
-//     };
-
-//     filter.onstop = () => {
-//       try {
-//         const buffer = new Blob(chunks);
-//         buffer.text().then((text) => {
-//           const json = JSON.parse(text);
-
-//           // Example: replace title with first English altTitle if available
-//           for (const item of json?.data || []) {
-//             const alts = item?.attributes?.altTitles || [];
-//             const altEn = alts.map((t) => t.en).find((t) => t && t.trim());
-//             if (altEn) {
-//               item.attributes.title = item.attributes.title || {};
-//               item.attributes.title.en = altEn;
-//             }
-//           }
-
-//           const out = JSON.stringify(json);
-//           filter.write(encoder.encode(out));
-//           filter.close();
-//         });
-//       } catch (e) {
-//         filter.write(encoder.encode("{}"));
-//         filter.close();
-//       }
-//     };
-//   },
-//   { urls: ["https://api.mangadex.org/manga*"] },
-//   ["blocking"]
-// );

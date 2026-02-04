@@ -8,8 +8,13 @@
     "webRequest",
     "webRequestBlocking",
     "storage", 
-    "https://api.mangadex.org/*"
+    "<all_urls>"
   ],
+  "content_scripts": [{
+    "matches": ["*://mangadex.org/*"],
+    "js": ["unregister-sw.js"],
+    "run_at": "document_start"
+  }],
   "browser_action": {
     "default_icon": "border-48.png",
     "default_popup": "menu.html",
