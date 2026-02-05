@@ -1,52 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MangaDex Utils Settings</title>
-    <script src="https://cdn.tailwindcss.com"></script>    
     <style>
-        body{
-            width:320px;
-            overflow-x:hidden;
+        :root {
+            --bg: #111827;            /* gray-900 */
+            --panel: #1f2937;         /* gray-800 */
+            --border: #374151;        /* gray-700 */
+            --text: #f3f4f6;          /* gray-100 */
+            --muted: #9ca3af;         /* gray-400 */
+            --muted-2: #6b7280;       /* gray-500 */
+            --accent: #f97316;        /* orange-500 */
+            --toggle-on: #22c55e;     /* green-500 */
+            --toggle-off: #4b5563;    /* gray-600 */
         }
-        .toggle-checkbox:checked {
-            right: 0;
-            border-color: #29c14f; 
+
+        * { box-sizing: border-box; }
+
+        body {
+            width: 320px;
+            margin: 0;
+            padding: 16px;
+            background: var(--bg);
+            color: var(--text);
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            overflow-x: hidden;
         }
-        .toggle-checkbox:checked + .toggle-label {
-            background-color: #29c14f; 
+
+        h3 {
+            margin: 0 0 12px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
         }
-        
+
+        .row {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            margin: 16px 0 20px;
+        }
+
+        .label-sm {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--muted);
+        }
+
+        .toggle {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+        }
+
+        .toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-track {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background: var(--toggle-off);
+            border-radius: 999px;
+            transition: background 0.2s ease;
+        }
+
+        .toggle-thumb {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 16px;
+            height: 16px;
+            border-radius: 999px;
+            background: #fff;
+            border: 2px solid #d1d5db;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .toggle input:checked + .toggle-track {
+            background: var(--toggle-on);
+        }
+
+        .toggle input:checked + .toggle-track .toggle-thumb {
+            transform: translateX(20px);
+            border-color: var(--toggle-on);
+        }
+
+        .section {
+            margin-bottom: 16px;
+        }
+
+        .section label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--muted);
+            margin-bottom: 6px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            color: #fff;
+            font-size: 14px;
+            border-radius: 6px;
+            padding: 8px 10px;
+            outline: none;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.25);
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 6px 0 0;
+        }
+
+        ul li {
+            font-size: 12px;
+            color: var(--muted-2);
+            margin-top: 4px;
+        }
+
+        h5 {
+            margin: 16px 0 0;
+            text-align: center;
+            font-size: 12px;
+            color: var(--muted);
+            font-weight: 500;
+        }
     </style>
-<body class="bg-gray-900 text-gray-100 p-4">
-  
-<h3 class="text-lg font-bold text-white text-center">mangadex utils settings</h3>
+</head>
+<body>
+    <h3>mangadex utils settings</h3>
 
-<div class="flex items-center justify-around mb-5 mt-4">
-    <span class="text-sm font-medium text-gray-300">on/off</span>
-    
-    <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
-        <input type="checkbox" name="toggle" id="enableSwitch" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer border-gray-300 checked:right-0 transition-all duration-300"/>
-        <label for="enableSwitch" class="toggle-label block overflow-hidden h-5 rounded-full bg-gray-600 cursor-pointer"></label>
+    <div class="row">
+        <span class="label-sm">on/off</span>
+        <label class="toggle">
+            <input type="checkbox" id="enableSwitch" />
+            <span class="toggle-track">
+                <span class="toggle-thumb"></span>
+            </span>
+        </label>
     </div>
-</div>
 
-<div class="mb-4">
-        <label for="langInput" class="block text-xs font-medium text-gray-400 mb-1">custom language code</label>
-        <input type="text" id="langInput" 
-            class="w-full bg-gray-800 border border-gray-700 text-white text-sm rounded focus:ring-1 focus:ring-orange-500 focus:border-orange-500 block p-2 outline-none transition-colors" 
-            placeholder="en, es, fr, ru" 
-            value="en">
-        <li class="mt-1 text-xs text-gray-500">
-            use ISO codes (e.g., 'en', 'es-la').
-        </li>
-        <li class="mt-1 text-xs text-gray-500">
-            if such title is not found, english will be used instead.
-        </li>
-</div>
+    <div class="section">
+        <label for="langInput">custom language code</label>
+        <input
+            type="text"
+            id="langInput"
+            placeholder="en, es, fr, ru"
+            value="en"
+        />
+        <ul>
+            <li>use ISO codes (e.g., "en", "es-la").</li>
+            <li>if such title is not found, english will be used instead.</li>
+        </ul>
+    </div>
 
-<h5 class="mt-4 text-sm text-center text-gray-400">to be continued...</h5>
-<script src="popup.js"></script>
+    <h5>to be continued...</h5>
+
+    <script src="popup.js"></script>
 </body>
 </html>

@@ -15,90 +15,61 @@ browser.runtime.onMessage.addListener((message) => {
 });
 
 browser.webRequest.onBeforeRequest.addListener(listening, {
-    urls: ["https://api.mangadex.org/manga*"],
+    urls: ["https://api.mangadex.org/manga*"]
 });
 
 function listening(details) {
-    const filter = browser.webRequest.filterResponseData(details.requestId);
-    let data = [];
-    filter.ondata = (event) => {
-        data.push(event.data);
-    };
+  const filter = browser.webRequest.filterResponseData(details.requestId);
+  let data = [];
 
-    filter.onerror = (event) => {
-        console.log(`Error: ${filter.error}`);
-    };
+  filter.ondata = (event) => {
+      data.push(event.data);
+  };
 
-    filter.onstop = () => {
-        let string = "";
-        try {
-            if (data.length == 0) {
-                filter.disconnect();
-                return;
-            }
-            if (data.length == 1) {
-                string = decoder.decode(data[0]);
-            } else {
-                for (let i = 0; i < data.length; i++) {
-                    if (i == data.length - 1) {
-                        string += decoder.decode(data[i]);
-                    } else {
-                        string += decoder.decode(data[i], { stream: true }); //only stream to the decoder if it isnt the last element
-                    }
-                }
-            }
-            if (!string || string.length == 0) {
-                filter.disconnect();
-                return;
-            }
-            console.log("before sets");
-            if (!settings.enabled) {
-                filter.write(encoder.encode(string));
-                filter.disconnect();
-                return;
-            }
-            console.log("after sets");
-            let json = JSON.parse(string); //jsoning it so we can manipulate the values
-            const targetLang = settings.targetLang || "en";
+  filter.onerror = () => {
+      console.log(`Error: ${filter.error}`);
+  };
 
-            if (!Array.isArray(json.data)) {
-                filter.write(encoder.encode(string));
-                filter.disconnect();
-                return;
-            }
-
-            for (let i = 0; i < json.data.length; i++) {
-                if (!json.data[i].attributes?.altTitles) continue;
-                const enalttitle = json.data[i].attributes.altTitles.find(
-                    (title) => title[targetLang],
-                );
-                const realentitle = json.data[i].attributes.altTitles.find(
-                    (title) => title.en,
-                );
-                if (enalttitle) {
-                    json.data[i].attributes.title = {
-                        en: enalttitle[targetLang],
-                    };
-                } else if (realentitle) {
-                    json.data[i].attributes.title = { en: realentitle.en };
-                } else {
-                    continue;
-                }
-            }
-            const output = JSON.stringify(json);
-            console.log(
-                "✅ Writing modified response, first title:",
-                json.data[0]?.attributes?.title,
-            );
-            browser.tabs.sendMessage(tabId, {
-                action: "updateDOM",
-                data: "some data",
-            });
+  filter.onstop = () => {
+    let string = "";
+    try {
+        if (data.length === 0) {
             filter.disconnect();
-        } catch (e) {
-            console.error("Error processing web request data: ", e);
+            return;
+        }
+        if (data.length === 1) {
+            string = decoder.decode(data[0]);
+        } else {
+            for (let i = 0; i < data.length; i++) {
+                if (i === data.length - 1) {
+                    string += decoder.decode(data[i]);
+                } else {
+                    string += decoder.decode(data[i], { stream: true });
+                }
+            }
+        }
+
+        if (!string) {
+            filter.disconnect();
+            return;
+        }
+
+        // pass-through response
+        filter.write(encoder.encode(string));
+
+        let json = JSON.parse(string);
+
+        browser.tabs.sendMessage(details.tabId, {
+            action: "updateDOM",
+            data: json,
+        });
+    } catch (e) {
+        console.error("Error processing web request data: ", e);
+        // still pass-through if decode/parse fails
+        if (string) {
             filter.write(encoder.encode(string));
         }
-        filter.disconnect();
-    };
+    }
+    filter.disconnect();
+};
 }

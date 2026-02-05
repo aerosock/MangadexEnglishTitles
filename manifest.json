@@ -1,25 +1,26 @@
 {
-    "manifest_version": 2,
-    "name": "MangadexTitleTL",
-    "version": "1.1",
-    "description": "Displays titles on Mangadex in the user's preferred language.",
-    "icons": { "48": "border-48.png" },
-    "permissions": [
-        "webRequest",
-        "webRequestBlocking",
-        "storage",
-        "api.mangadex.org"
-    ],
-    "content_scripts": [
-        {
-            "matches": ["*://mangadex.org/titles*"],
-            "js": ["contentscript.js"]
-        }
-    ],
-    "browser_action": {
-        "default_icon": "border-48.png",
-        "default_popup": "menu.html",
-        "default_title": "Mangadex Settings"
-    },
-    "background": { "scripts": ["bgscript.js"] }
+  "manifest_version": 2,
+  "name": "MangadexTitleTL",
+  "version": "1.1",
+  "description": "Displays titles on Mangadex in the user's preferred language.",
+  "icons": { "48": "border-48.png" },
+  "permissions": [
+    "webRequest",
+    "webRequestBlocking",
+    "webRequestFilterResponse",
+    "storage",
+    "https://api.mangadex.org/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["*://mangadex.org/titles*"],
+      "js": ["contentscript.js"]
+    }
+  ],
+  "browser_action": {
+    "default_icon": "border-48.png",
+    "default_popup": "menu.html",
+    "default_title": "Mangadex Settings"
+  },
+  "background": { "scripts": ["bgscript.js"] }
 }
