@@ -2,6 +2,8 @@ let decoder = new TextDecoder("utf-8");
 let encoder = new TextEncoder();
 
 let settings = { enabled: true, targetLang: "en" };
+console.log("bgscript loaded");
+
 
 browser.storage.local.get(["enabled", "targetLang"]).then((res) => {
     if (res.enabled !== undefined) settings.enabled = res.enabled;
@@ -13,12 +15,23 @@ browser.runtime.onMessage.addListener((message) => {
         settings = message.settings;
     }
 });
+console.log("bgscript loaded 2");
 
-browser.webRequest.onBeforeRequest.addListener(listening, {
-    urls: ["https://api.mangadex.org/manga*"]
-});
+console.log("filterResponseData exists:", typeof browser.webRequest.filterResponseData);
+
+browser.webRequest.onBeforeRequest.addListener(
+  listening,
+  { urls: ["<all_urls>"] },
+  ["blocking"]
+);
 
 function listening(details) {
+    //this has taken so long to figure out. the listener wouldnt trigger if you put the api.mangadex in there no matter what. 
+    //it only triggers if you put all urls and then filter all of the incoming triggers like done below
+    //much more resource intensive i assume but oh well
+  if (!details.url.startsWith("https://api.mangadex.org/manga?")) return;
+  console.log("bgscript listening", details.url, details.tabId);
+
   const filter = browser.webRequest.filterResponseData(details.requestId);
   let data = [];
 

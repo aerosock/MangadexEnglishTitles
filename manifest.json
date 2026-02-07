@@ -9,7 +9,8 @@
     "webRequestBlocking",
     "webRequestFilterResponse",
     "storage",
-    "https://api.mangadex.org/*"
+    "tabs",
+    "<all_urls>"
   ],
   "content_scripts": [
     {
