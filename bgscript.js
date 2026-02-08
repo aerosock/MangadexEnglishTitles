@@ -20,12 +20,13 @@ console.log("bgscript loaded 2");
 console.log("filterResponseData exists:", typeof browser.webRequest.filterResponseData);
 
 browser.webRequest.onBeforeRequest.addListener(
-  listening,
-  { urls: ["<all_urls>"] },
-  ["blocking"]
+    listening,
+    { urls: ["<all_urls>"] },
+    ["blocking"]
 );
 
 function listening(details) {
+    if (!settings.enabled) return;
     //this has taken so long to figure out. the listener wouldnt trigger if you put the api.mangadex in there no matter what. 
     //it only triggers if you put all urls and then filter all of the incoming triggers like done below
     //much more resource intensive i assume but oh well

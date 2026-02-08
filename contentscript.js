@@ -30,6 +30,7 @@ browser.runtime.onMessage.addListener((message) => {
 
 async function main(){
   try{
+    if (!settings.enabled) return;
     if (!response?.data?.length) return;
     const matches = document.querySelectorAll("a.title > span");
     for (let i=0; i < matches.length; i++){ {
@@ -58,6 +59,7 @@ async function main(){
 let debounceTimer;
 const observer = new MutationObserver(() => {
   clearTimeout(debounceTimer);
+  if (!settings.enabled) return;
   debounceTimer = setTimeout(main, 100);
 });
 observer.observe(document.body, { childList: true, subtree: true });
