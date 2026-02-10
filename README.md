@@ -9,6 +9,8 @@ The replaced titles are highlighted with a different colour. In the extension se
 
 If a title doesn't exist in your language of choice it will default to english, or if english doesnt exist, it will leave the title unchanged
 
+[Available here
+](https://addons.mozilla.org/cs/firefox/addon/mangadextitletl)
 
 ### Examples
 
