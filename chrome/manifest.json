@@ -4,13 +4,8 @@
   "version": "1.1",
   "description": "Displays titles on Mangadex in the user's preferred language.",
   "icons": { "48": "border-48.png" },
-  "permissions": [
-    "webRequest",
-    "webRequestBlocking",
-    "webRequestFilterResponse",
-    "storage",
-    "tabs",
-    "<all_urls>"
+  "host_permissions": [
+    "*://mangadex.org/titles*"
   ],
   "content_scripts": [
     {
@@ -23,5 +18,5 @@
     "default_popup": "menu.html",
     "default_title": "Mangadex Settings"
   },
-  "background": { "scripts": ["bgscript.js"] }
+  "background": { "service_worker": "background.js"}
 }

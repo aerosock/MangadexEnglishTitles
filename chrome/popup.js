@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     browser.storage.local.get(["enabled", "targetLang", "targetColor"]).then((result) => {
         enableSwitch.checked = result.enabled !== undefined ? result.enabled : true;
         langInput.value = result.targetLang || "en";
-        colorInput.value = result.targetColor || "red";
+        colorInput.value = result.targetColor || "#87CEEB";
     });
 
     function saveSettings() {

@@ -37,7 +37,7 @@ async function main(){
       if (matches[i].dataset.mdDone) continue; // mark as done
       let responsesg = response?.data[i]?.attributes?.altTitles;
       const targetLang = settings.targetLang || "en";
-      const targetColor = settings.targetColor || "red";
+      const targetColor = settings.targetColor || "#87CEEB";
       let enname = (responsesg || []).map((t) => t[targetLang]).find((t) => t && t.trim());// get first english alttitle from array
       let title = matches[i];
       let color = targetColor; // use target color from settings
