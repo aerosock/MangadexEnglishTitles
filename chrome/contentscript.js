@@ -10,6 +10,14 @@ browser.runtime.onMessage.addListener((request) => {
   }
 }); 
 
+browser.runtime.onMessage.addListener((request) => {
+  if (request.action === "TITLE_JSON") {
+    if (request.data.type)
+    response = request.data;
+    main();
+  }
+}); 
+
 browser.storage.local.get(["enabled", "targetLang", "targetColor"]).then((res) => {
     if (res.enabled !== undefined) settings.enabled = res.enabled;
     if (res.targetLang) settings.targetLang = res.targetLang;
