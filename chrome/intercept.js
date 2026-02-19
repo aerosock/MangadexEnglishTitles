@@ -11,7 +11,7 @@ window.fetch = async (...args) => {
     
     clone.json().then(data => {
       window.postMessage({ type: "TITLE_JSON", data: data }, "*");
-    }).catch(err => console.error("Interceptor JSON error", err));
+    }).catch(err => console.error("interceptor error", err));
   }
 
   return response;

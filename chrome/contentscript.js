@@ -3,28 +3,20 @@ console.log("contentscript loaded", location.href);
 let response;
 let settings = { enabled: true, targetLang: "en" };
 
-browser.runtime.onMessage.addListener((request) => {
-  if (request.action === "updateDOM") {
-    response = request.data;
-    main();
-  }
-}); 
+window.addEventListener("message", (event) => {
+    if (event.data.type === "TITLE_JSON") {
+      response = event.data.data;
+      main();
+    }
+});
 
-browser.runtime.onMessage.addListener((request) => {
-  if (request.action === "TITLE_JSON") {
-    if (request.data.type)
-    response = request.data;
-    main();
-  }
-}); 
-
-browser.storage.local.get(["enabled", "targetLang", "targetColor"]).then((res) => {
+chrome.storage.local.get(["enabled", "targetLang", "targetColor"]).then((res) => {
     if (res.enabled !== undefined) settings.enabled = res.enabled;
     if (res.targetLang) settings.targetLang = res.targetLang;
     if (res.targetColor) settings.targetColor = res.targetColor;
 });
 
-browser.runtime.onMessage.addListener((message) => {
+chrome.runtime.onMessage.addListener((message) => {
     if (message.type === "SETTINGS_UPDATED") {
         settings = message.settings;
 

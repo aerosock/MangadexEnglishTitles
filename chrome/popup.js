@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const langInput = document.getElementById("langInput");
     const colorInput = document.getElementById("colorInput");
 
-    browser.storage.local.get(["enabled", "targetLang", "targetColor"]).then((result) => {
+    chrome.storage.local.get(["enabled", "targetLang", "targetColor"]).then((result) => {
         enableSwitch.checked = result.enabled !== undefined ? result.enabled : true;
         langInput.value = result.targetLang || "en";
         colorInput.value = result.targetColor || "#87CEEB";
@@ -16,9 +16,9 @@ document.addEventListener("DOMContentLoaded", () => {
             targetColor: colorInput.value.trim()
         };
 
-        browser.storage.local.set(settings).then(() => {
+        chrome.storage.local.set(settings).then(() => {
             
-            browser.runtime.sendMessage({ type: "SETTINGS_UPDATED", settings: settings });
+            chrome.runtime.sendMessage({ type: "SETTINGS_UPDATED", settings: settings });
         });
     }
 
